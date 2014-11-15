@@ -10,10 +10,12 @@ Compress files using zip or gzip
 
 - Any suffix is ignored. In other words, the following commands give the same result
 	
-	```
+	```R
 	gzipuse "/mydata.dta"
 	gzipuse "/mydata.dta.gz"
 	gzipuse "/mydata"
 	```
 
 - `gzip` makes more sense than `zip` to compress individual `dta` files
+
+- I'd like to read `gzip` files using a pipe but I can't make it work on Yosemite. Any tip is welcome.
