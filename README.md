@@ -1,4 +1,5 @@
-Compress files using zip or gzip
+Read and write compressed .dta files using `zip` or `gzip`
+
 
 - Commands use/save/merge/joinby/append can be prefixed by `zip` or `gzip`. `zip` requires the command `unar`, while `gzip` requires the command `pigz` (parallel gzip).  All the supplementary options in these usual commands work as usual
 
