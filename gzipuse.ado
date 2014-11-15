@@ -1,5 +1,5 @@
 program define gzipuse
-syntax anything [using] [if] [in][, clear replace * pipe]
+syntax anything [using] [if] [in][, clear replace pipe *]
 
 qui memory
 if  r(data_data_u) ~= 0 & "`clear'"=="" & "`replace'"==""{
@@ -23,18 +23,19 @@ local directory `r(directory)'
 local filename `filename'
 local filetype `filetype'
 
-
 if "`pipe'"~=""{
-	tempfile tempfile myscript
-	local tempfile "/Users/Matthieu/tempfile.dta"
-	! rm `tempfile'
-	cap file close myscript
+	* does not work in OS X Yosemite
+	tempfile myscript mypipe
+	qui !rm -f `mypipe'.dta
 	qui file open myscript using "`myscript'", write replace
-	file write myscript  `"mkfifo `tempfile'"' _n `"unpigz -p4 -c "`directory'/`filename'.dta.gz" > "`tempfile'" &"'
+	file write myscript ///
+	`"mkfifo `mypipe'.dta"' _n ///
+	`"unpigz -p4 -c "`directory'/`filename'.dta.gz" > "`mypipe'.dta" &"'
 	file close myscript
-	! chmod 755 `myscript'
-	! `myscript' > /dev/null 2>&1  
-	qui use  `vlist' "`tempfile'" `if' `in', `options' `clear' `replace'
+	! chmod 700 "`myscript'"
+	! "`myscript'" > /dev/null 2>&1 < /dev/null
+	qui use  `vlist' "`mypipe'.dta" `if' `in',`options' `clear' `replace'
+	!rm -f "`mypipe'.dta"
 	global S_FN = "`filename'.dta"
 }
 else{
@@ -46,9 +47,3 @@ else{
 }
 end
 
-/***************************************************************************************************
-basically:
-!unar -f  "$DataPath/compustat/bank/bank_fundq.zip"  -o "$SavePath"
-use "$SavePath/bank_fundq", clear 
-erase "$SavePath/bank_fundq.dta"
-***************************************************************************************************/

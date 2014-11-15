@@ -32,12 +32,7 @@ qui save "`tempdirectory'`filename'.dta", replace
 qui !cd "`tempdirectory'"  &&  pigz -c -f -`compression' -p4  "`filename'.dta" > "`directory'/`filename'.dta.gz" && rm "`file'" 
 
 
-
-*cap local allfiles: dir "/Volumes/RAMDisk" files *
-*if _rc~=0{
-
-
-/*  
+/* Try to  unzip in ram. Any feedback welcome 
 qui memory
 local sizem=`r(data_data_u)'/1000000
 if `sizem'>20{
@@ -59,10 +54,6 @@ else{
 *	!rm -r /Volumes/RAMDisk
 *	local tempdirectory /Volumes/RAMDisk/
 *}
-	*/
-
-
-
 /*  
 if `sizem'>20{
 	!cd "`tempdirectory'" && zip -o "`directory'/`filename'.zip" "`filename'.dta" && osascript  -e 'tell application "Finder" to eject (every disk whose name starts with "ram")'
@@ -73,7 +64,3 @@ else{
 */
 end
 
-
-/***************************************************************************************************
-clown 644 remet les bonnes permissions
-***************************************************************************************************/

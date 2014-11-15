@@ -19,4 +19,6 @@ Read and write compressed .dta files using `zip` or `gzip`
 
 - `gzip` makes more sense than `zip` to compress individual `dta` files
 
-- I'd like to read `gzip` files using a pipe but I can't make it work on Yosemite. Any tip is welcome.
+- Things I'd like to do
+	- I'd like to read `gzip` files using a pipe but I can't make it work on Yosemite. Some code can be found in the `gipuse.ado` file. It should work on OSX Maverick.
+	- I'd like to unzip/save in the RAM instead of a hard drive. Initial code can be found in the `gipsave.ado` file
