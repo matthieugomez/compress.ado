@@ -1,4 +1,3 @@
-cap program drop splitpath
 program define splitpath, rclass
 syntax anything
 
