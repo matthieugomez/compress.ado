@@ -26,7 +26,9 @@ Read and write compressed .dta files using `zip` or `gzip`
 		gzipuse "/mydata"
 		```
 
--  OSX users can unzip/save in the RAM instead of a hard drive using the option "ram". This makes `gzipuse` and `gzipsave` almost as fast as the `use` and `save` commmand. Timings below on a 3Go file.
+-  OSX users can unzip/save in the RAM instead of a hard drive using the option "ram". 
+
+-  Timings below on a 3Go file.
 
 	```
 	set rmsg on
