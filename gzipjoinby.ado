@@ -11,8 +11,8 @@ if regexm(`"`file'"',`""(.*)""'){
 
 splitpath `file'
 local directory `r(directory)'
-local filename `filename'
-local filetype `filetype'
+local filename `r(filename)'
+local filetype `r(filetype)'
 
 tempfile tempfile
 

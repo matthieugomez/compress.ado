@@ -1,10 +1,10 @@
 program define zipsave
-syntax anything [if] [in] [, replace clear *]
+syntax anything [, replace clear ram *]
 
-parsepath `file'
+splitpath `anything'
 local directory `r(directory)'
-local filename `filename'
-local filetype `filetype'
+local filename `r(filename)'
+local filetype `r(filetype)'
 
 
 local files : dir "`directory'" files `"`filename'.zip"'
@@ -14,14 +14,30 @@ if "`files'"~="" & "`replace'"=="" & "`clear'"=="" {
 }
 
 tempfile temp
-parsepath `temp'
+splitpath `temp'
 local tempdirectory `r(directory)'
 
+if "`ram'"~=""{
+	qui memory
+	local sizem=`r(data_data_u)'/1000000
+	local ramsize = 2048*ceil(`sizem')
+	qui !hdiutil eject /Volumes/stataramdisk
+	qui !diskutil erasevolume HFS+ "stataramdisk" `hdiutil attach -nomount ram://`ramsize'`
+	*''
+	local tempdirectory "/Volumes/stataramdisk/"
+}
+else{
+	tempfile temp
+	splitpath `temp'
+	local tempdirectory `r(directory)'
+}
 
 qui !rm "`directory'/`filename'.zip" 
 qui save "`tempdirectory'`filename'.dta", replace
+qui !cd "`tempdirectory'" && zip -o "`directory'`filename'.zip" "`filename'.dta" && rm "`tempdirectory'`filename'.dta" 
 
-
-qui !cd "`tempdirectory'" && zip -o "`directory'/`filename'.zip" "`filename'.dta" && rm "`tempdirectory'`filename'.dta" 
+if "`ram'"~=""{
+	qui !hdiutil eject `tempdirectory'
+}
 
 end
