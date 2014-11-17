@@ -1,0 +1,2 @@
+d M. Gomez
+p compress compress .dta files
