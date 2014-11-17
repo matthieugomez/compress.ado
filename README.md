@@ -2,28 +2,31 @@ Read and write compressed .dta files using `zip` or `gzip`
 
 - These functions only work on Max OSX or Linux.
 
-- Commands use/save/merge/joinby/append can be prefixed by `zip` or `gzip`.  All the usual options in these usual commands work as usual
+`zip` requires the command `unar`, while `gzip` requires the command `pigz` (parallel gzip). 
 
-	```R
-	use "mydata"
-	zipuse "mydata"
-	gzipuse "mydata"
-	```
+- Syntax
 
-- `zip` requires the command `unar`, while `gzip` requires the command `pigz` (parallel gzip). 
+	- Commands use/save/merge/joinby/append can be prefixed by `zip` or `gzip`.  
 
-- Any suffix is ignored. In other words, the following commands give the same result
+		```R
+		use "mydata"
+		zipuse "mydata"
+		gzipuse "mydata"
+		```
+
+	- All the usual options in these usual commands work as usual
+
+
+
+	- Any suffix is ignored. In other words, the following commands give the same result
 	
-	```R
-	gzipuse "/mydata.dta"
-	gzipuse "/mydata.dta.gz"
-	gzipuse "/mydata"
-	```
+		```R
+		gzipuse "/mydata.dta"
+		gzipuse "/mydata.dta.gz"
+		gzipuse "/mydata"
+		```
 
--  OSX users can unzip/save in the RAM instead of a hard drive using the option "ram". Almost as fast as the `use` and `save` commmand (see timing below)
-
-
-- Some benchmark on a 3Go file
+-  OSX users can unzip/save in the RAM instead of a hard drive using the option "ram". This makes `gzipuse` and `gzipsave` almost as fast as the `use` and `save` commmand. Timings below on a 3Go file.
 
 	```
 	set rmsg on
@@ -32,7 +35,7 @@ Read and write compressed .dta files using `zip` or `gzip`
 	*t = 21s
 
 	gzipsave "temp", replace ram
-	*t = 23 s
+	*t = 23s
 
 	gzipsave "temp", replace
 	*t = 38s
