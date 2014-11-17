@@ -20,6 +20,41 @@ Read and write compressed .dta files using `zip` or `gzip`
 	gzipuse "/mydata"
 	```
 
-- Experimental
-	- Unzip/save in the RAM instead of a hard drive for OSX users. Use the option "ram"
-	- Read `gzip` files using a pipe. I can't make it work on Yosemite. Some code that worked on OSX Maverick can be found in the `gipuse.ado` file.
+-  OSX users can unzip/save in the RAM instead of a hard drive using the option "ram". Almost as fast as the `use` and `save` commmand (see timing below)
+
+
+- Some benchmark on a 3Go file
+
+	```
+	set rmsg on
+
+	save "temp", replace
+	*t = 21s
+
+	gzipsave "temp", replace ram
+	*t = 23 s
+
+	gzipsave "temp", replace
+	*t = 38s
+
+	zipsave "temp", replace ram
+	*t = 47s
+
+	zipsave "temp", replace
+	*t = 65s
+
+	use "temp", clear
+	*t = 10s
+
+	gzipuse "temp", clear ram
+	*t = 15s
+
+	gzipuse "temp", clear
+	*t = 17s
+
+	zipuse "temp", clear ram
+	*t = 25s
+
+	zipuse "temp", clear
+	*t = 68s
+	```

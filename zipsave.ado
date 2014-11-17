@@ -1,5 +1,5 @@
 program define zipsave
-syntax anything [, replace clear ram *]
+syntax anything [, replace ram *]
 
 splitpath `anything'
 local directory `r(directory)'
@@ -8,7 +8,7 @@ local filetype `r(filetype)'
 
 
 local files : dir "`directory'" files `"`filename'.zip"'
-if "`files'"~="" & "`replace'"=="" & "`clear'"=="" {
+if "`files'"~="" & "`replace'"==""  {
 	display as error "file `anything' already exists"
 	exit 602
 }
@@ -37,6 +37,7 @@ qui save "`tempdirectory'`filename'.dta", replace
 qui !cd "`tempdirectory'" && zip -o "`directory'`filename'.zip" "`filename'.dta" && rm "`tempdirectory'`filename'.dta" 
 
 if "`ram'"~=""{
+	qui !umount `tempdirectory'
 	qui !hdiutil eject `tempdirectory'
 }
 

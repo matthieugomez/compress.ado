@@ -1,5 +1,5 @@
 program define gzipsave
-syntax anything [, replace clear Compression(integer 6) * ram]
+syntax anything [, replace Compression(integer 6) * ram]
 
 
 splitpath `anything'
@@ -9,7 +9,7 @@ local filetype `r(filetype)'
 
 
 local files : dir "`directory'" files `"`filename'.dta.gz"'
-if "`files'"~="" & "`replace'"=="" & "`clear'"=="" {
+if "`files'"~="" & "`replace'"==""  {
 	display as error "file `anything' already exists"
 	exit 602
 }
@@ -36,7 +36,9 @@ else{
 }
 qui save "`tempdirectory'`filename'.dta", replace
 qui !cd "`tempdirectory'"  &&  pigz -c -f -`compression' -p4  "`filename'.dta" > "`directory'`filename'.dta.gz" && rm "`file'" 
+
 if "`ram'"~=""{
+	qui !umount `tempdirectory'
 	qui !hdiutil eject `tempdirectory'
 }
 end

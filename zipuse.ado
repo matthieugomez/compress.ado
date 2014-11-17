@@ -1,5 +1,5 @@
 program define zipuse
-syntax anything [using] [if] [in][, clear replace *]
+syntax anything [using] [if] [in][, clear replace ram *]
 
 qui memory
 if  r(data_data_u) ~= 0 & "`clear'"=="" & "`replace'"==""{
@@ -19,8 +19,8 @@ else{
 
 splitpath `file'
 local directory `r(directory)'
-local filename `filename'
-local filetype `filetype'
+local filename `r(filename)'
+local filetype `r(filetype)'
 
 
 if "`ram'"~=""{
@@ -30,19 +30,20 @@ if "`ram'"~=""{
 	qui !hdiutil eject /Volumes/stataramdisk
 	qui !diskutil erasevolume HFS+ "stataramdisk" `hdiutil attach -nomount ram://`ramsize'`
 	*''
-	local tempdirectory "/Volumes/stataramdisk"
+	local tempdirectory "/Volumes/stataramdisk/"
 }
 else{
 	tempfile tempfile
-	splitpath `temp'
+	splitpath `tempfile'
 	local tempdirectory `r(directory)'
 }
 
 qui !unar -f  "`directory'/`filename'.zip" -o "`tempdirectory'"
-qui use `vlist' "`tempdirectory'/`filename'" `if' `in',`options' `clear' `replace'
-qui !rm -r "`temp'"
+qui use `vlist' "`tempdirectory'`filename'" `if' `in',`options' `clear' `replace'
+qui !rm -r "`tempdirectory'"
 
 if "`ram'"~=""{
+	qui !umount `tempdirectory'
 	qui !hdiutil eject "`tempdirectory'"
 }
 

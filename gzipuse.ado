@@ -12,7 +12,6 @@ if `"`using'"'~=""{
 	if regexm(`"`using'"',`"using (.*)"'){
 		local file = regexs(1)
 	}
-	local file: list clean file
 }
 else{
 	local file `anything'
@@ -42,7 +41,8 @@ qui !rm -r "`temp'"
 global S_FN = "`filename'.dta"
 
 if "`ram'"~=""{
-	qui !hdiutil eject "/Volumes/stataramdisk"
+	qui !umount /Volumes/stataramdisk
+	qui !hdiutil eject /Volumes/stataramdisk
 }
 end
 
