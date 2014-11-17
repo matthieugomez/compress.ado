@@ -28,7 +28,7 @@ Read and write compressed .dta files using `zip` or `gzip`
 
 -  OSX users can unzip/save in the RAM instead of a hard drive using the option "ram". 
 
--  Timings below on a 3Go file.
+-  Timings on a 3Go file.
 
 	```
 	set rmsg on
