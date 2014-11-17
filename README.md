@@ -1,5 +1,11 @@
 Read and write compressed .dta files using `zip` or `gzip` 
 
+Install using 
+
+```
+net install  https://rawgit.com/matthieugomez/stata-compress/master/compress.pkg
+```
+
 - These functions only work on Max OSX or Linux.
 
 `zip` requires the command `unar`, while `gzip` requires the command `pigz` (parallel gzip). 
