@@ -26,7 +26,7 @@ Read and write compressed .dta files using `zip` or `gzip`
 		gzipuse "/mydata"
 		```
 
--  OSX users can unzip/save in the RAM instead of a hard drive using the option "ram". 
+-  Writing/reading speed is generally the bottleneck of zip/unzip commands. OSX users can unzip/save in the RAM instead of a hard drive using the option "ram". This creates and delete a RAM disk named "stataram" used to hold the temporary .dta file.
 
 -  Timings on a 3Go file.
 
