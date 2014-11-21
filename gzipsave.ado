@@ -34,9 +34,8 @@ else{
 	splitpath `temp'
 	local tempdirectory `r(directory)'
 }
-qui !mkdir `temp'
 qui save "`tempdirectory'`filename'.dta", replace
-qui !cd "`tempdirectory'"  &&  pigz -c -f -`compression' -p4  "`filename'.dta" > "`directory'`filename'.dta.gz" && rm "`filename.dta'" 
+qui !cd "`tempdirectory'"  &&  pigz -c -f -`compression' -p4  "`filename'.dta" > "`directory'`filename'.dta.gz" && rm "`filename'.dta" 
 
 if "`ram'"~=""{
 	qui !umount `tempdirectory'
