@@ -34,8 +34,10 @@ else{
 
 qui !rm "`directory'/`filename'.zip" 
 qui save "`tempdirectory'`filename'.dta", replace
-qui !cd "`tempdirectory'" && zip -o "`directory'`filename'.zip" "`filename'.dta" && rm "`tempdirectory'`filename'.dta" 
+qui !cd "`tempdirectory'" && zip -o "`directory'`filename'.zip" "`filename'.dta" && rm "`filename'.dta" 
 
+
+qui !rm -r `tempdirectory'
 if "`ram'"~=""{
 	qui !umount `tempdirectory'
 	qui !hdiutil eject `tempdirectory'

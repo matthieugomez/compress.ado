@@ -19,5 +19,6 @@ local tempdirectory `r(directory)'
 
 qui !unar -f  "`directory'/`filename'.zip" -o "`tempdirectory'"
 merge `anything' using "`tempdirectory'`filename'",`options'
+qui !rm -r "`tempdirectory'`filename'"
 end
 

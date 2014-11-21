@@ -17,5 +17,6 @@ tempfile tempfile
 
 qui ! unpigz -p4 -c "`directory'/`filename'.dta.gz" >  "`tempfile'.dta"
 merge `anything' using "`tempfile'.dta",`options'
+qui !rm -r "`tempfile'.dta" 
 end
 

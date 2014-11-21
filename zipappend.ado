@@ -17,5 +17,6 @@ local tempdirectory `r(directory)'
 
 qui !unar -f  "`directory'/`filename'.zip" -o "`tempdirectory'"
 append using "`tempdirectory'`filename'",`options'
+qui !rm -r "`tempdirectory'`filename'.dta"
 end
 

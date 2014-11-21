@@ -40,7 +40,7 @@ else{
 
 qui !unar -f  "`directory'/`filename'.zip" -o "`tempdirectory'"
 qui use `vlist' "`tempdirectory'`filename'" `if' `in',`options' `clear' `replace'
-qui !rm -r "`tempdirectory'"
+qui !rm -r "`tempdirectory'`filename'"
 
 if "`ram'"~=""{
 	qui !umount `tempdirectory'

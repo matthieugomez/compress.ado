@@ -21,5 +21,6 @@ local tempdirectory `r(directory)'
 
 qui !unar -f  "`directory'/`filename'.zip" -o "`tempdirectory'"
 joinby `anything' using "`tempdirectory'`filename'",`options'
+qui !rm -r "`tempdirectory'`filename'"
 end
 

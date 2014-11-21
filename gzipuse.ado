@@ -37,7 +37,7 @@ else{
 
 qui ! unpigz -p4 -c "`directory'`filename'.dta.gz" >  "`tempfile'.dta"
 qui use `vlist' "`tempfile'.dta" `if' `in',`options' `clear' `replace'
-qui !rm -r "`temp'"
+qui !rm -r "`tempfile'.dta" 
 global S_FN = "`filename'.dta"
 
 if "`ram'"~=""{
