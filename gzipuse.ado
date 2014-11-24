@@ -1,5 +1,5 @@
 program define gzipuse
-syntax anything [using] [if] [in][, clear replace ram *]
+syntax anything [using] [if] [in][, clear replace ram multiplier(real 20)*]
 
 qui memory
 if  r(data_data_u) ~= 0 & "`clear'"=="" & "`replace'"==""{
@@ -24,8 +24,9 @@ local filetype `r(filetype)'
 
 if "`ram'"~=""{
 	filesize_temp "`directory'`filename'.dta.gz"
-	local ramsize = 2048 * 20 * ceil(`=r(MB)')
-	tempname ramdisk
+	local ramsize = 2048 * `multiplier' * ceil(`=r(MB)')
+	tempfile ramdisk
+	local ramdisk = subinstr("`ramdisk'", "/", "", .)
 	qui !hdiutil eject /Volumes/`ramdisk'
 	qui !diskutil erasevolume HFS+ "`ramdisk'" `hdiutil attach -nomount ram://`ramsize'`
 	*''
