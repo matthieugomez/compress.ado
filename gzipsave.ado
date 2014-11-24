@@ -23,7 +23,8 @@ if "`replace'"~=""{
 if "`ram'"~=""{
 	qui memory
 	local sizem=`r(data_data_u)' / 1000000
-	tempname ramdisk
+	tempfile ramdisk
+	local ramdisk = subinstr("`ramdisk'", "/", "", .)
 	local ramsize = 2048 * ceil(`sizem')
 	qui !hdiutil eject /Volumes/`ramdisk'
 	qui !diskutil erasevolume HFS+ "`ramdisk'" `hdiutil attach -nomount ram://`ramsize'`
