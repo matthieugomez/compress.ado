@@ -6,13 +6,11 @@ Install using
 net install  https://rawgit.com/matthieugomez/stata-compress/master/compress.pkg
 ```
 
-- These functions only work on Max OSX or Linux.
-
-`zip` requires the command `unar`, while `gzip` requires the command `pigz` (parallel gzip). 
+- These functions only work on Max OSX or Linux.  `gzip` requires the command [pigz](http://zlib.net/pigz/). 
 
 - Syntax
 
-	- Commands use/save/merge/joinby/append can be prefixed by `zip` or `gzip`.  
+	- Commands use/save/merge/joinby/append can be prefixed `gzip`.  
 
 		```R
 		use "mydata"
@@ -21,7 +19,6 @@ net install  https://rawgit.com/matthieugomez/stata-compress/master/compress.pkg
 		```
 
 	- All the usual options in these usual commands work as usual
-
 
 
 	- Any suffix is ignored. In other words, the following commands give the same result
@@ -48,12 +45,6 @@ net install  https://rawgit.com/matthieugomez/stata-compress/master/compress.pkg
 	gzipsave "temp", replace
 	*t = 38s
 
-	zipsave "temp", replace ram
-	*t = 47s
-
-	zipsave "temp", replace
-	*t = 65s
-
 	use "temp", clear
 	*t = 10s
 
@@ -62,10 +53,4 @@ net install  https://rawgit.com/matthieugomez/stata-compress/master/compress.pkg
 
 	gzipuse "temp", clear
 	*t = 17s
-
-	zipuse "temp", clear ram
-	*t = 25s
-
-	zipuse "temp", clear
-	*t = 68s
 	```
