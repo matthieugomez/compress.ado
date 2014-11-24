@@ -40,8 +40,33 @@ qui save "`tempdirectory'`filename'.dta", replace
 qui !cd "`tempdirectory'"  &&  pigz -c -f -`compression' -p4  "`filename'.dta" > "`directory'`filename'.dta.gz" && rm "`filename'.dta" 
 
 if "`ram'"~=""{
-	qui !umount `tempdirectory'
-	qui !hdiutil eject `tempdirectory'
+	qui !hdiutil eject /Volumes/`ramdisk'
 }
 end
 
+
+program def ashell_gzipsave, rclass
+version 8.0
+syntax anything (name=cmd)
+tempfile temp
+shell `cmd' >> "`temp'"
+tempname fh
+local linenum =0
+file open `fh' using "`temp'", read
+file read `fh' line
+ while r(eof)==0 {
+  local linenum = `linenum' + 1
+  scalar count = `linenum'
+  return local o`linenum' = `"`line'"'
+  return local no = `linenum'
+  file read `fh' line
+ }
+file close `fh'
+
+if("$S_OS"=="Windows"){
+ shell del `temp'
+}
+else{
+ shell rm `temp'
+}
+end

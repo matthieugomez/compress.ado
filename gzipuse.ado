@@ -42,7 +42,6 @@ qui !rm -r "`tempfile'.dta"
 global S_FN = "`filename'.dta"
 
 if "`ram'"~=""{
-	qui !umount /Volumes/`ramdisk'
 	qui !hdiutil eject /Volumes/`ramdisk'
 }
 end
