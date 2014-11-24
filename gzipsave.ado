@@ -22,12 +22,13 @@ if "`replace'"~=""{
 
 if "`ram'"~=""{
 	qui memory
-	local sizem=`r(data_data_u)'/1000000
-	local ramsize = 2048*ceil(`sizem')
-	qui !hdiutil eject /Volumes/stataramdisk
-	qui !diskutil erasevolume HFS+ "stataramdisk" `hdiutil attach -nomount ram://`ramsize'`
+	local sizem=`r(data_data_u)' / 1000000
+	tempname ramdisk
+	local ramsize = 2048 * ceil(`sizem')
+	qui !hdiutil eject /Volumes/`ramdisk'
+	qui !diskutil erasevolume HFS+ "`ramdisk'" `hdiutil attach -nomount ram://`ramsize'`
 	*''
-	local tempdirectory "/Volumes/stataramdisk/"
+	local tempdirectory "/Volumes/`ramdisk'/"
 }
 else{
 	tempfile temp

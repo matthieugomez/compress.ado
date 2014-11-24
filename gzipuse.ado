@@ -23,26 +23,26 @@ local filename `r(filename)'
 local filetype `r(filetype)'
 
 if "`ram'"~=""{
-	qui memory
-	local sizem=`r(data_data_u)'/1000000
-	local ramsize = 2048*ceil(`sizem')
-	qui !hdiutil eject /Volumes/stataramdisk
-	qui !diskutil erasevolume HFS+ "stataramdisk" `hdiutil attach -nomount ram://`ramsize'`
+	filesize_temp "`directory'`filename'.dta.gz"
+	local ramsize = 2048 * 20 * ceil(`=r(MB)')
+	tempname ramdisk
+	qui !hdiutil eject /Volumes/`ramdisk'
+	qui !diskutil erasevolume HFS+ "`ramdisk'" `hdiutil attach -nomount ram://`ramsize'`
 	*''
-	local tempfile "/Volumes/stataramdisk/one"
+	local tempfile "/Volumes/`ramdisk'/one"
 }
 else{
 	tempfile tempfile
 }
 
-qui ! unpigz -p4 -c "`directory'`filename'.dta.gz" >  "`tempfile'.dta"
+qui !unpigz -p4 -c "`directory'`filename'.dta.gz" >  "`tempfile'.dta"
 qui use `vlist' "`tempfile'.dta" `if' `in',`options' `clear' `replace'
 qui !rm -r "`tempfile'.dta" 
 global S_FN = "`filename'.dta"
 
 if "`ram'"~=""{
-	qui !umount /Volumes/stataramdisk
-	qui !hdiutil eject /Volumes/stataramdisk
+	qui !umount /Volumes/`ramdisk'
+	qui !hdiutil eject /Volumes/`ramdisk'
 }
 end
 
@@ -67,3 +67,47 @@ end
  	global S_FN = "`filename'.dta"
  }
   */
+
+
+program define filesize_temp, rclass
+
+	ashell_temp du -sk "`0'"
+	if regexm(`"`r(o1)'"',"^([0-9]*).*"){
+		local size = regexs(1) 
+	}	
+	return local KB = `size'
+	return local MB = `size'/1000
+	return local GB = `size'/1000000
+end
+
+
+program def ashell_temp, rclass
+version 8.0
+syntax anything (name=cmd)
+tempfile temp
+shell `cmd' >> "`temp'"
+tempname fh
+local linenum =0
+file open `fh' using "`temp'", read
+file read `fh' line
+ while r(eof)==0 {
+  local linenum = `linenum' + 1
+  scalar count = `linenum'
+  return local o`linenum' = `"`line'"'
+  return local no = `linenum'
+  file read `fh' line
+ }
+file close `fh'
+
+if("$S_OS"=="Windows"){
+ shell del `temp'
+}
+else{
+ shell rm `temp'
+}
+
+
+end
+
+
+
