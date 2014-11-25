@@ -22,6 +22,12 @@ local directory `r(directory)'
 local filename `r(filename)'
 local filetype `r(filetype)'
 
+cap confirm file "`directory'`filename'.dta.gz"
+if _rc{
+	display as error "file `directory'`filename'.dta.gz not found"
+	exit 4
+}
+
 if "`ram'"~=""{
 	filesize_temp "`directory'`filename'.dta.gz"
 	local ramsize = 2048 * `multiplier' * ceil(`=r(MB)')
