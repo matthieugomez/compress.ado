@@ -8,9 +8,9 @@ local filename `r(filename)'
 local filetype `r(filetype)'
 
 
-local files : dir "`directory'" files `"`filename'.dta.gz"'
-if "`files'"~="" & "`replace'"==""  {
-	display as error "file `anything' already exists"
+cap confirm new file "`directory'`filename'.dta.gz"
+if _rc  & "`replace'"==""  {
+	display as error "file `directory'`filename'.dta.gz already exists"
 	exit 602
 }
 
