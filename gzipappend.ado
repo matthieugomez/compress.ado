@@ -18,9 +18,12 @@ if _rc{
 	exit 4
 }
 
+qui creturn list
+local nprocessors = c(processors)
+
 tempfile tempfile
 
-qui ! unpigz -p4 -c "`directory'/`filename'.dta.gz" >  "`tempfile'.dta"
+qui ! unpigz -p`nprocessors' -c "`directory'/`filename'.dta.gz" >  "`tempfile'.dta"
 append using  "`tempfile'.dta",`options'
 qui !rm -r "`tempfile'.dta" 
 end

@@ -1,4 +1,4 @@
-Read and write compressed .dta files using `zip` or `gzip` 
+Read and write compressed .dta files using `pigz` (a parallel implementation of `gzip`). 
 
 Install using 
 

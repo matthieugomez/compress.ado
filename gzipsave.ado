@@ -18,7 +18,8 @@ if "`replace'"~=""{
 	qui !rm -f "`directory'/`filename'.dta.gz" 
 }
 
-
+qui creturn list
+local nprocessors = c(processors)
 
 if "`ram'"~=""{
 	qui memory
@@ -37,7 +38,7 @@ else{
 	local tempdirectory `r(directory)'
 }
 qui save "`tempdirectory'`filename'.dta", replace
-qui !cd "`tempdirectory'"  &&  pigz -c -f -`compression' -p4  "`filename'.dta" > "`directory'`filename'.dta.gz" && rm "`filename'.dta" 
+qui !cd "`tempdirectory'"  &&  pigz -c -f -`compression' -p`nprocessors'  "`filename'.dta" > "`directory'`filename'.dta.gz" && rm "`filename'.dta" 
 
 if "`ram'"~=""{
 	qui !hdiutil eject /Volumes/`ramdisk'

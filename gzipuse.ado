@@ -28,6 +28,9 @@ if _rc{
 	exit 4
 }
 
+qui creturn list
+local nprocessors = c(processors)
+
 if "`ram'"~=""{
 	filesize_temp "`directory'`filename'.dta.gz"
 	local ramsize = 2048 * `multiplier' * ceil(`=r(MB)')
@@ -42,7 +45,7 @@ else{
 	tempfile tempfile
 }
 
-qui !unpigz -p4 -c "`directory'`filename'.dta.gz" >  "`tempfile'.dta"
+qui !unpigz -p`nprocessors' -c "`directory'`filename'.dta.gz" >  "`tempfile'.dta"
 qui use `vlist' "`tempfile'.dta" `if' `in',`options' `clear' `replace'
 qui !rm -r "`tempfile'.dta" 
 global S_FN = "`filename'.dta"
