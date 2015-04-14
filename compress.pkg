@@ -1,11 +1,6 @@
 d compress
 d {bf: M. Gomez}
 d Distribution-Date: 20141117
-f zipuse.ado
-f zipsave.ado
-f zipappend.ado
-f zipmerge.ado
-f zipjoinby.ado
 f gzipuse.ado
 f gzipsave.ado
 f gzipappend.ado
