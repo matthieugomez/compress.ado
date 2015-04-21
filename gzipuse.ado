@@ -1,5 +1,5 @@
 program define gzipuse
-syntax anything [using] [if] [in][, clear replace ram multiplier(real 20)*]
+syntax anything [using] [in][, clear replace ram multiplier(real 20)*]
 
 qui memory
 if  r(data_data_u) ~= 0 & "`clear'"=="" & "`replace'"==""{
