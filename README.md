@@ -5,6 +5,14 @@ Install using
 ```
 net install  https://rawgit.com/matthieugomez/stata-compress/master/compress.pkg
 ```
+If you have a version of Stata < 13, you need to install it manually
+Click the "Download ZIP" button in the right column to download a zipfile. Extract it into a folder (e.g. ~/SOMEFOLDER)
+2. Run: (changing SOMEFOLDER with whatever you picked)
+```
+cap ado uninstall compress
+net install compress, from("~/SOMEFOLDER")
+```
+
 
 - These functions only work on Max OSX or Linux.  `gzip` requires the command [pigz](http://zlib.net/pigz/). 
 
