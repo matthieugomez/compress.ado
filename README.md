@@ -44,7 +44,7 @@ Read and write compressed .dta files using `pigz` (a parallel implementation of 
 Install using 
 
 ```
-net install  https://rawgit.com/matthieugomez/stata-compress/master/compress.pkg
+net install  "https://raw.githubusercontent.com/matthieugomez/compress.ado/master/"
 ```
 
 If you have a version of Stata < 13, you need to install it manually
